@@ -1,4 +1,10 @@
-import { MissingEnvironment, RequiredEnvironment } from "./interface";
+import {
+  MissingEnvironment,
+  RequiredEnvironment,
+  RequiredEnvironmentTypes,
+} from "./interface";
+
+export * from "./interface";
 
 export default (parameters: RequiredEnvironment[]) => {
   const errors: string[] = [];
@@ -7,12 +13,12 @@ export default (parameters: RequiredEnvironment[]) => {
     const value: any = process.env[parameter.name];
 
     if (!value) {
-      errors.push(`Missing parameter ${parameter.name}`);
+      errors.push(`Missing ${parameter.name}`);
       continue;
     }
 
     switch (parameter.type) {
-      case "string": {
+      case RequiredEnvironmentTypes.String: {
         if (typeof value === "string") {
           continue;
         }
@@ -20,7 +26,7 @@ export default (parameters: RequiredEnvironment[]) => {
         break;
       }
 
-      case "number": {
+      case RequiredEnvironmentTypes.Number: {
         if (typeof value === "number" || !isNaN(value)) {
           continue;
         }
@@ -28,7 +34,7 @@ export default (parameters: RequiredEnvironment[]) => {
         break;
       }
 
-      case "boolean": {
+      case RequiredEnvironmentTypes.Boolean: {
         if (typeof value === "boolean") {
           continue;
         }
@@ -36,7 +42,7 @@ export default (parameters: RequiredEnvironment[]) => {
         break;
       }
 
-      case "stringarray": {
+      case RequiredEnvironmentTypes.StringArray: {
         if (typeof value === "string") {
           if (!parameter.delimiter) {
             errors.push(`Missing delimiter for ${parameter.name}`);
@@ -58,7 +64,7 @@ export default (parameters: RequiredEnvironment[]) => {
         break;
       }
 
-      case "numberarray": {
+      case RequiredEnvironmentTypes.NumberArray: {
         if (typeof value === "string") {
           if (!parameter.delimiter) {
             errors.push(`Missing delimiter for ${parameter.name}`);
