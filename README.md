@@ -30,7 +30,7 @@ import validate, { RequiredEnvironmentTypes } from "validate-runtime-environment
 // import dotenv from "dotenv";
 // dotenv.config()
 
-validate(
+validate([
   {
     name: "MONGODB_URI",
     type: RequiredEnvironmentTypes.String, // "string"
@@ -39,7 +39,7 @@ validate(
     name: "PORT",
     type: RequiredEnvironmentTypes.Number, // "number"
   }
-);
+]);
 
 ```js
 ### Javascript
@@ -52,7 +52,7 @@ const validate = require("@boxpositron/vre").default;
 // import dotenv from "dotenv";
 // dotenv.config()
 
-validate(
+validate([
   {
     name: "MONGODB_URI",
     type: "string",
@@ -61,5 +61,5 @@ validate(
     name: "PORT",
     type: "number",
   }
-);
+]);
 ```
